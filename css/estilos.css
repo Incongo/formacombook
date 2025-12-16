@@ -1,0 +1,269 @@
+/* ---------------------------------------------------
+   ESTILO GENERAL Y CONTENEDOR CENTRAL
+--------------------------------------------------- */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* ---------------------------------------------------
+   HEADER Y NAVEGACIÓN
+--------------------------------------------------- */
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 15px 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header h1 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* NAV */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* Campana */
+.icono-notis {
+    position: relative;
+    font-size: 20px;
+    color: #fff;
+}
+
+.icono-notis .contador {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: red;
+    color: white;
+    font-size: 11px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* ---------------------------------------------------
+   GALERÍA DE FOTOS
+--------------------------------------------------- */
+
+/* PC → 4 fotos por fila */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Tarjeta */
+.foto {
+    background: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.foto img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* ---------------------------------------------------
+   PERFIL
+--------------------------------------------------- */
+
+.perfil {
+    display: flex;
+    gap: 40px;
+}
+
+.perfil-info {
+    width: 250px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.perfil-info .avatar {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.perfil-fotos {
+    flex: 1;
+}
+
+/* ---------------------------------------------------
+   COMENTARIOS
+--------------------------------------------------- */
+
+.comentario {
+    background: #fff;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.comentario .fecha {
+    font-size: 0.75em;
+    color: #777;
+}
+
+.respuesta {
+    margin-left: 20px;
+    background: #fafafa;
+}
+
+/* ---------------------------------------------------
+   FORMULARIOS
+--------------------------------------------------- */
+
+form {
+    background: #fff;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 15px;
+    padding: 8px 12px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------
+   BOTONES
+--------------------------------------------------- */
+
+.btn {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-eliminar {
+    background: #c0392b;
+}
+
+.btn-eliminar:hover {
+    background: #e74c3c;
+}
+
+/* ---------------------------------------------------
+   NOTIFICACIONES
+--------------------------------------------------- */
+
+.notificacion {
+    background: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.notificacion.noleido {
+    background: #eaf6ff;
+    border-left: 4px solid #3498db;
+}
+
+/* ---------------------------------------------------
+   FOOTER
+--------------------------------------------------- */
+
+footer {
+    background: #222;
+    color: #ccc;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+/* ---------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------- */
+
+/* TABLET → 3 fotos por fila */
+@media (max-width: 900px) {
+    .galeria {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* MÓVIL → 1 foto por fila + menú centrado */
+@media (max-width: 600px) {
+
+    header .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil {
+        flex-direction: column;
+    }
+
+    .perfil-info {
+        width: 100%;
+    }
+}
