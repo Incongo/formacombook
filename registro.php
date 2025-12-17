@@ -39,34 +39,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include 'includes/header.php'; ?>
 
-<h2>Registro de usuario</h2>
+<div class="auth-container">
+    <div class="register-card">
+        <h1>Registro de usuario</h1>
 
-<?php if ($exito): ?>
-    <?php
-    redirigir('login.php');
-    exit;
-    ?>
-<?php endif; ?>
+        <?php if ($exito): ?>
+            <div class="alert alert-success">
+                Usuario registrado correctamente. Redirigiendo...
+            </div>
+            <?php
+            redirigir('login.php');
+            exit;
+            ?>
+        <?php endif; ?>
 
-<?php if (!empty($errores)): ?>
-    <ul class="errores">
-        <?php foreach ($errores as $error): ?>
-            <li><?php echo $error; ?></li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+        <?php if (!empty($errores)): ?>
+            <div class="alert alert-danger">
+                <ul>
+                    <?php foreach ($errores as $error): ?>
+                        <li><?php echo $error; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-<form action="" method="POST">
-    <label>Nombre:</label>
-    <input type="text" name="nombre" required>
+        <form action="" method="POST">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required>
 
-    <label>Email:</label>
-    <input type="email" name="email" required>
+            <label>Email:</label>
+            <input type="email" name="email" required>
 
-    <label>Contraseña:</label>
-    <input type="password" name="password" required>
+            <label>Contraseña:</label>
+            <input type="password" name="password" required>
 
-    <button type="submit">Registrarse</button>
-</form>
+            <button type="submit">Registrarse</button>
+        </form>
+    </div>
+</div>
 
 <?php include 'includes/footer.php'; ?>

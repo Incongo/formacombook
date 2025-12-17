@@ -349,3 +349,21 @@ function contarNotificacionesNoLeidas($usuario_id)
 
     return $resultado['total'];
 }
+
+function actualizarFoto($foto_id, $titulo, $descripcion) {
+    $db = conectarBD();
+    $sql = "UPDATE fotos SET titulo = ?, descripcion = ? WHERE fotos_id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("ssi", $titulo, $descripcion, $foto_id);
+    return $stmt->execute();
+}
+
+function obtenerFotoPorId($foto_id) {
+    $db = conectarBD();
+    $sql = "SELECT * FROM fotos WHERE fotos_id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $foto_id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    return $resultado->fetch_assoc();
+}

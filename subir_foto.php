@@ -52,35 +52,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include 'includes/header.php';
 ?>
 
-<h2>Subir Foto</h2>
+<div class="auth-container">
+    <div class="form-card">
+        <h1>Subir Foto</h1>
 
-<?php if ($exito): ?>
-    <?php
-    redirigir('perfil.php');
-    exit;
-    ?>
-<?php endif; ?>
+        <?php if ($exito): ?>
+            <div class="alert alert-success">
+                Foto subida correctamente. Redirigiendo a tu perfil...
+            </div>
+            <?php
+            redirigir('perfil.php');
+            exit;
+            ?>
+        <?php endif; ?>
 
+        <?php if (!empty($errores)): ?>
+            <div class="alert alert-danger">
+                <ul>
+                    <?php foreach ($errores as $error): ?>
+                        <li><?php echo $error; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-<?php if (!empty($errores)): ?>
-    <ul class="errores">
-        <?php foreach ($errores as $error): ?>
-            <li><?php echo $error; ?></li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <label>Título:</label>
+            <input type="text" name="titulo" required>
 
-<form action="" method="POST" enctype="multipart/form-data">
-    <label>Título:</label>
-    <input type="text" name="titulo" required>
+            <label>Descripción:</label>
+            <textarea name="descripcion"></textarea>
 
-    <label>Descripción:</label>
-    <textarea name="descripcion"></textarea>
+            <label>Imagen:</label>
+            <input type="file" name="foto" accept="image/*" required>
 
-    <label>Imagen:</label>
-    <input type="file" name="foto" accept="image/*" required>
-
-    <button type="submit">Subir foto</button>
-</form>
+            <button type="submit">Subir foto</button>
+        </form>
+    </div>
+</div>
 
 <?php include 'includes/footer.php'; ?>

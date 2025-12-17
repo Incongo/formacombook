@@ -15,56 +15,79 @@ $resultado = $db->query($sql);
 include 'includes/header.php';
 ?>
 
-<h2>Galería de Fotos</h2>
+<h2 class="text-center my-4">Galería de Fotos</h2>
 
-<div class="galeria">
+<div class="container-fluid px-4">
+    <div class="row g-4">
 
-    <?php while ($foto = $resultado->fetch_assoc()): ?>
+        <?php while ($foto = $resultado->fetch_assoc()): ?>
 
-        <div class="foto">
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
 
-            <a href="foto.php?id=<?php echo $foto['fotos_id']; ?>">
-                <img src="<?php echo BASE_URL . $foto['ruta']; ?>" alt="<?php echo $foto['titulo']; ?>">
-            </a>
+                <div class="card h-100 shadow-sm">
 
-            <h3><?php echo $foto['titulo']; ?></h3>
+                    <a href="foto.php?id=<?= $foto['fotos_id'] ?>" class="text-decoration-none">
+                        <img
+    src="<?= BASE_URL . $foto['ruta'] ?>"
+    loading="lazy"
+    class="card-img-top"
+    alt="<?= htmlspecialchars($foto['titulo']) ?>"
+>
 
-            <p class="autor">
-                Subida por: <strong><?php echo $foto['autor']; ?></strong>
-            </p>
+                    </a>
 
-            <p class="descripcion">
-                <?php echo $foto['descripcion']; ?>
-            </p>
+                    <div class="card-body d-flex flex-column">
 
-            <p class="votos">
-                Votos: <strong><?php echo contarVotos($foto['fotos_id']); ?></strong>
-            </p>
+                        <h5 class="card-title mb-1">
+                            <?= htmlspecialchars($foto['titulo']) ?>
+                        </h5>
 
-            <?php if (usuarioLogueado()): ?>
+                        <small class="text-muted mb-2">
+                            por <?= htmlspecialchars($foto['autor']) ?>
+                        </small>
 
-                <?php if ($_SESSION['usuario_id'] == $foto['autor_id']): ?>
-                    <p class="info">No puedes votar tu propia foto.</p>
+                        <p class="card-text small text-muted flex-grow-1">
+                            <?= htmlspecialchars($foto['descripcion']) ?>
+                        </p>
 
-                <?php elseif (usuarioHaVotado($_SESSION['usuario_id'], $foto['fotos_id'])): ?>
-                    <p class="info">Ya has votado esta foto.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
 
-                <?php else: ?>
-                    <form action="votar.php" method="POST">
-                        <input type="hidden" name="foto_id" value="<?php echo $foto['fotos_id']; ?>">
-                        <button type="submit">Votar</button>
-                    </form>
+                            <span class="badge bg-dark">
+                                ❤️ <?= contarVotos($foto['fotos_id']) ?>
+                            </span>
 
-                <?php endif; ?>
+                            <?php if (usuarioLogueado()): ?>
 
-            <?php else: ?>
-                <p class="info">Inicia sesión para votar.</p>
-            <?php endif; ?>
+                                <?php if ($_SESSION['usuario_id'] == $foto['autor_id']): ?>
+                                    <small class="text-muted">Tu foto</small>
 
-        </div>
+                                <?php elseif (usuarioHaVotado($_SESSION['usuario_id'], $foto['fotos_id'])): ?>
+                                    <small class="text-muted">Votada</small>
 
-    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <form action="votar.php" method="POST">
+                                        <input type="hidden" name="foto_id" value="<?= $foto['fotos_id'] ?>">
+                                        <button class="btn btn-sm btn-outline-dark">
+                                            Votar
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
 
+                            <?php else: ?>
+                                <small class="text-muted">Login para votar</small>
+                            <?php endif; ?>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        <?php endwhile; ?>
+
+    </div>
 </div>
+
 
 <?php include 'includes/footer.php'; ?>
