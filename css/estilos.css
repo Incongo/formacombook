@@ -1,65 +1,84 @@
-/* ---------------------------------------------------
-   ESTILO GENERAL Y CONTENEDOR CENTRAL
---------------------------------------------------- */
+/* --------------------------------------------------
+   VARIABLES (USAMOS TUS COLORES ORIGINALES)
+-------------------------------------------------- */
+:root {
+    --color-fondo: #f4f4f4;
+    --color-texto: #222;
+    --color-header: #333;
+    --color-footer: #222;
+    --color-card-bg: rgba(255, 255, 255, 0.85);
+    --color-card-border: #ddd;
+    --color-card-text: #555;
+    --color-boton: #333;
+    --color-boton-hover: #111;
+    --color-blanco: #fff;
+}
+
+/* --------------------------------------------------
+   RESET Y BASE
+-------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: "Montserrat", sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 15px;
-}
-
-/* ---------------------------------------------------
-   HEADER Y NAVEGACIÓN
---------------------------------------------------- */
-
+/* --------------------------------------------------
+   HEADER
+-------------------------------------------------- */
 header {
-    background: #333;
-    color: #fff;
-    padding: 15px 0;
-}
-
-header .container {
+    background: var(--color-header);
+    color: var(--color-blanco);
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 24px;
-}
-
 header h1 a {
-    color: #fff;
+    color: var(--color-blanco);
     text-decoration: none;
+    font-weight: 600;
 }
 
-/* NAV */
 nav ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
     display: flex;
     gap: 15px;
 }
 
 nav ul li a {
-    color: #fff;
+    color: var(--color-blanco);
     text-decoration: none;
-    font-size: 15px;
+    font-weight: 500;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
 /* Campana */
 .icono-notis {
     position: relative;
     font-size: 20px;
-    color: #fff;
+    color: var(--color-blanco);
 }
 
 .icono-notis .contador {
@@ -74,24 +93,41 @@ nav ul li a {
     font-weight: bold;
 }
 
-/* ---------------------------------------------------
-   GALERÍA DE FOTOS
---------------------------------------------------- */
+/* --------------------------------------------------
+   TARJETAS (FOTOS, COMENTARIOS, FORMULARIOS)
+-------------------------------------------------- */
+.card {
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    transition: transform 0.2s ease;
+}
 
-/* PC → 4 fotos por fila */
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* --------------------------------------------------
+   GALERÍA DE FOTOS
+-------------------------------------------------- */
+
+/* PC → máximo 4 fotos */
 .galeria {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    padding: 20px 40px;
 }
 
-/* Tarjeta */
 .foto {
-    background: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.08);
 }
 
 .foto img {
@@ -99,154 +135,168 @@ nav ul li a {
     border-radius: 6px;
 }
 
-/* ---------------------------------------------------
-   PERFIL
---------------------------------------------------- */
-
-.perfil {
-    display: flex;
-    gap: 40px;
-}
-
-.perfil-info {
-    width: 250px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-}
-
-.perfil-info .avatar {
+/* --------------------------------------------------
+   FORMULARIOS EN TARJETAS
+-------------------------------------------------- */
+.form-card {
+    max-width: 500px;
     width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid var(--color-card-border);
     border-radius: 6px;
-    margin-bottom: 15px;
+    background: var(--color-blanco);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.perfil-fotos {
-    flex: 1;
+.form-card label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
 }
 
-/* ---------------------------------------------------
-   COMENTARIOS
---------------------------------------------------- */
-
-.comentario {
-    background: #fff;
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.comentario .fecha {
-    font-size: 0.75em;
-    color: #777;
-}
-
-.respuesta {
-    margin-left: 20px;
-    background: #fafafa;
-}
-
-/* ---------------------------------------------------
-   FORMULARIOS
---------------------------------------------------- */
-
-form {
-    background: #fff;
-    padding: 15px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    margin: 20px 0;
-}
-
-form input,
-form textarea {
+.form-card input,
+.form-card textarea {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #bbb;
     border-radius: 4px;
+    font-family: inherit;
 }
 
-form button {
+.form-card button {
+    width: 100%;
     margin-top: 15px;
-    padding: 8px 12px;
-    background: #333;
-    color: #fff;
+    background: var(--color-boton);
+    color: var(--color-blanco);
     border: none;
+    padding: 10px;
+    font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
 }
 
-/* ---------------------------------------------------
-   BOTONES
---------------------------------------------------- */
+.form-card button:hover {
+    background: var(--color-boton-hover);
+}
 
-.btn {
-    display: inline-block;
-    padding: 6px 10px;
-    background: #333;
-    color: #fff;
-    text-decoration: none;
+/* --------------------------------------------------
+   LOGIN Y REGISTRO (TARJETAS CENTRADAS)
+-------------------------------------------------- */
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 20px;
+}
+
+.login-card,
+.register-card {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid var(--color-card-border);
+    border-radius: 6px;
+    background: var(--color-blanco);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-card h1,
+.register-card h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-card form label,
+.register-card form label {
+    margin-top: 10px;
+    display: block;
+    font-weight: 600;
+}
+
+.login-card form input,
+.register-card form input,
+.register-card form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #bbb;
     border-radius: 4px;
-    font-size: 14px;
+    font-family: inherit;
 }
 
-.btn-eliminar {
-    background: #c0392b;
+.register-card form textarea {
+    min-height: 120px;
+    resize: vertical;
 }
 
-.btn-eliminar:hover {
-    background: #e74c3c;
+.login-card form button,
+.register-card form button {
+    width: 100%;
+    margin-top: 15px;
+    background: var(--color-boton);
+    color: var(--color-blanco);
+    border: none;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-/* ---------------------------------------------------
-   NOTIFICACIONES
---------------------------------------------------- */
+.login-card form button:hover,
+.register-card form button:hover {
+    background: var(--color-boton-hover);
+}
 
-.notificacion {
-    background: #fff;
+
+/* --------------------------------------------------
+   COMENTARIOS
+-------------------------------------------------- */
+.comentario {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid #ddd;
     margin-bottom: 10px;
 }
 
-.notificacion.noleido {
-    background: #eaf6ff;
-    border-left: 4px solid #3498db;
+.respuesta {
+    margin-left: 20px;
+    background: rgba(255, 255, 255, 0.5);
 }
 
-/* ---------------------------------------------------
+/* --------------------------------------------------
    FOOTER
---------------------------------------------------- */
-
+-------------------------------------------------- */
 footer {
-    background: #222;
-    color: #ccc;
+    background: var(--color-footer);
+    color: var(--color-blanco);
     text-align: center;
     padding: 15px;
-    margin-top: 40px;
+    margin-top: auto;
 }
 
-/* ---------------------------------------------------
+/* --------------------------------------------------
    RESPONSIVE
---------------------------------------------------- */
+-------------------------------------------------- */
 
-/* TABLET → 3 fotos por fila */
+/* Tablet → 2 fotos */
 @media (max-width: 900px) {
     .galeria {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
     }
 }
 
-/* MÓVIL → 1 foto por fila + menú centrado */
+/* Móvil → 1 foto + menú centrado */
 @media (max-width: 600px) {
 
-    header .container {
+    header {
         flex-direction: column;
+        align-items: center;
         text-align: center;
         gap: 10px;
     }
@@ -257,13 +307,10 @@ footer {
 
     .galeria {
         grid-template-columns: 1fr;
+        padding: 10px;
     }
 
-    .perfil {
-        flex-direction: column;
-    }
-
-    .perfil-info {
-        width: 100%;
+    .form-card {
+        margin: 10px;
     }
 }
