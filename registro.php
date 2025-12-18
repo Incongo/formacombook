@@ -5,14 +5,11 @@ require_once 'includes/funciones.php';
 $errores = [];
 $exito = false;
 
-// Procesar formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $nombre = limpiar($_POST['nombre']);
     $email = limpiar($_POST['email']);
     $password = $_POST['password'];
 
-    // Validaciones
     if (empty($nombre) || empty($email) || empty($password)) {
         $errores[] = "Todos los campos son obligatorios.";
     }
@@ -21,12 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "El email no es válido.";
     }
 
-    // Comprobar si el email ya existe
     if (emailExiste($email)) {
         $errores[] = "El email ya está registrado.";
     }
 
-    // Si no hay errores, registrar usuario
     if (empty($errores)) {
         if (registrarUsuario($nombre, $email, $password)) {
             $exito = true;
@@ -39,43 +34,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include 'includes/header.php'; ?>
 
-<div class="auth-container">
-    <div class="register-card">
-        <h1>Registro de usuario</h1>
+<div class="ui container" style="max-width: 400px; margin-top: 60px;">
+    <div class="ui centered card">
+        <div class="content">
+            <h2 class="ui header center aligned">Registro de usuario</h2>
 
-        <?php if ($exito): ?>
-            <div class="alert alert-success">
-                Usuario registrado correctamente. Redirigiendo...
-            </div>
-            <?php
-            redirigir('login.php');
-            exit;
-            ?>
-        <?php endif; ?>
+            <?php if ($exito): ?>
+                <div class="ui positive message">
+                    <div class="header">Registro exitoso</div>
+                    <p>Usuario creado correctamente. Redirigiendo...</p>
+                </div>
+                <?php
+                redirigir('login.php');
+                exit;
+                ?>
+            <?php endif; ?>
 
-        <?php if (!empty($errores)): ?>
-            <div class="alert alert-danger">
-                <ul>
-                    <?php foreach ($errores as $error): ?>
-                        <li><?php echo $error; ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+            <?php if (!empty($errores)): ?>
+                <div class="ui negative message">
+                    <div class="header">Error</div>
+                    <ul class="list">
+                        <?php foreach ($errores as $error): ?>
+                            <li><?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
-        <form action="" method="POST">
-            <label>Nombre:</label>
-            <input type="text" name="nombre" required>
+            <form class="ui form" action="" method="POST">
+                <div class="field">
+                    <label>Nombre</label>
+                    <div class="ui left icon input">
+                        <input type="text" name="nombre" required>
+                        <i class="user icon"></i>
+                    </div>
+                </div>
 
-            <label>Email:</label>
-            <input type="email" name="email" required>
+                <div class="field">
+                    <label>Email</label>
+                    <div class="ui left icon input">
+                        <input type="email" name="email" required>
+                        <i class="envelope icon"></i>
+                    </div>
+                </div>
 
-            <label>Contraseña:</label>
-            <input type="password" name="password" required>
+                <div class="field">
+                    <label>Contraseña</label>
+                    <div class="ui left icon input">
+                        <input type="password" name="password" required>
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
 
-            <button type="submit">Registrarse</button>
-        </form>
+                <button type="submit" class="ui primary button fluid">Registrarse</button>
+            </form>
+        </div>
     </div>
 </div>
+
 
 <?php include 'includes/footer.php'; ?>

@@ -15,9 +15,13 @@ require_once 'config.php';
 
 <head>
     <meta charset="UTF-8">
-    <title>Formacombook</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Incongogram</title> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="<?= BASE_URL ?>css/estilos.css">
+<link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>uploads/logo/Logo.ico">
+
+
 
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/estilos.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,29 +29,51 @@ require_once 'config.php';
 
 <body>
 
-    <header>
-        <h1><a href="<?php echo BASE_URL; ?>index.php">Formacombook</a></h1>
+<header>
+    <!-- Logo + nombre a la izquierda -->
+    <div class="ui inverted segment">
+        <div class="ui inverted secondary menu">
+            <div class="item">
+                <img src="<?= BASE_URL ?>uploads/logo/Logo.ico" 
+                     alt="Logo" 
+                     style="width:40px; height:auto; margin-right:10px;">
+                <span style="font-size:1.2em; color:white;">Incongogram</span>
+            </div>
+        </div>
+    </div>
 
-        <nav>
-            <ul>
-                <li><a href="<?php echo BASE_URL; ?>index.php">Inicio</a></li>
+    <!-- Menú desplegable separado -->
+    <div class="ui inverted segment" style="margin-top:0;">
+        <div class="ui simple dropdown item">
+            <button class="ui inverted button">
+                <i class="bars icon"></i> Menú
+            </button>
+            <div class="ui inverted menu">
+                <a class="item" href="<?= BASE_URL ?>index.php">Inicio</a>
 
                 <?php if (isset($_SESSION['usuario_id'])): ?>
-                    <li><a href="<?php echo BASE_URL; ?>subir_foto.php">Subir foto</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>perfil.php">Mi perfil</a></li>
-                    <a href="perfil.php#notificaciones" class="icono-notis">
-                        🔔
+                    <a class="item" href="<?= BASE_URL ?>subir_foto.php">Subir foto</a>
+                    <a class="item" href="<?= BASE_URL ?>perfil.php">Mi perfil</a>
+
+                    <!-- Notificaciones -->
+                    <a class="item" href="<?= BASE_URL ?>perfil.php#notificaciones">
+                        </i> Notificaciones
                         <?php if ($notis > 0): ?>
-                            <span class="contador"><?php echo $notis; ?></span>
+                            <span class="ui red circular label"><?php echo $notis; ?></span>
                         <?php endif; ?>
                     </a>
-                    <li><a href="<?php echo BASE_URL; ?>logout.php">Cerrar sesión</a></li>
+
+                    <a class="item" href="<?= BASE_URL ?>logout.php">Cerrar sesión</a>
                 <?php else: ?>
-                    <li><a href="<?php echo BASE_URL; ?>login.php">Iniciar sesión</a></li>
-                    <li><a href="<?php echo BASE_URL; ?>registro.php">Registrarse</a></li>
+                    <a class="item" href="<?= BASE_URL ?>login.php">Iniciar sesión</a>
+                    <a class="item" href="<?= BASE_URL ?>registro.php">Registrarse</a>
                 <?php endif; ?>
-            </ul>
-        </nav>
-    </header>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
 
     <main>

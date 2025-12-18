@@ -12,94 +12,99 @@ if (!$foto) {
 include 'includes/header.php';
 ?>
 
-<div class="container my-5">
-
-    <div class="row justify-content-center">
-
-        <!-- IMAGEN -->
-        <div class="col-12 col-lg-8 mb-4">
-            <div class="card border-0 shadow-sm">
-                <img
-                    src="<?= BASE_URL . $foto['ruta'] ?>"
-                    class="img-fluid rounded"
-                    loading="lazy"
-                    alt="<?= htmlspecialchars($foto['titulo']) ?>"
-                >
-            </div>
-        </div>
-
         <!-- INFO -->
-        <div class="col-12 col-lg-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
+<div class="ui container" style="margin-top: 30px; max-width: 900px;">
+    <div class="ui card fluid">
+        <!-- Imagen protagonista -->
+        <div class="image">
+            <img class="ui fluid image"
+                 src="<?= BASE_URL . $foto['ruta'] ?>"
+                 alt="<?= htmlspecialchars($foto['titulo']) ?>"
+                 loading="lazy">
+        </div>
 
-                    <h3 class="card-title mb-2">
-                        <?= htmlspecialchars($foto['titulo']) ?>
-                    </h3>
-
-                    <p class="text-muted mb-2">
-                        por <strong><?= htmlspecialchars($foto['autor']) ?></strong>
-                    </p>
-
-                    <p class="small text-muted mb-3">
-                        <?= nl2br(htmlspecialchars($foto['descripcion'])) ?>
-                    </p>
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-
-                        <span class="badge bg-dark fs-6">
-                            ❤️ <?= contarVotos($foto['fotos_id']) ?>
-                        </span>
-
-                        <?php if (usuarioLogueado()): ?>
-
-                            <?php if ($_SESSION['usuario_id'] == $foto['usuarios_id']): ?>
-                                <small class="text-muted">Tu foto</small>
-
-                            <?php elseif (usuarioHaVotado($_SESSION['usuario_id'], $foto['fotos_id'])): ?>
-                                <small class="text-muted">Ya votada</small>
-
-                            <?php else: ?>
-                                <form action="votar.php" method="POST" class="form-voto">
-                                    <input type="hidden" name="foto_id" value="<?= $foto['fotos_id'] ?>">
-                                    <button class="btn btn-outline-dark btn-sm">Votar</button>
-                                </form>
-                            <?php endif; ?>
-
-                        <?php else: ?>
-                            <small class="text-muted">Inicia sesión para votar</small>
-                        <?php endif; ?>
-
-                    </div>
-
-                </div>
+        <!-- Datos de la foto -->
+        <div class="content">
+            <div class="header"><?= htmlspecialchars($foto['titulo']) ?></div>
+            <div class="meta">
+                <?php if (!empty($foto['avatar'])): ?>
+                    <img class="ui avatar image"
+                         src="<?= BASE_URL . $foto['avatar']; ?>"
+                         alt="Avatar de <?= htmlspecialchars($foto['autor']); ?>">
+                <?php endif; ?>
+                por <strong><?= htmlspecialchars($foto['autor']) ?></strong> · 
+                <?php 
+                $fecha = new DateTime($foto['fecha_subida']);
+                echo $fecha->format('d/m/Y'); 
+                ?>
+            </div>
+            <div class="description">
+                <?= nl2br(htmlspecialchars($foto['descripcion'])) ?>
             </div>
         </div>
 
-    </div>
-
-    <!-- COMENTARIOS -->
-    <div class="row justify-content-center mt-5">
-        <div class="col-12 col-lg-8">
-
-            <h4 class="mb-3">Comentarios</h4>
+        <!-- Likes y votos -->
+        <div class="extra content">
+            <span class="right floated">
+                ❤️ <?= contarVotos($foto['fotos_id']) ?>
+            </span>
 
             <?php if (usuarioLogueado()): ?>
-                <form id="form-comentario" action="procesar_comentario.php" class="mb-4">
-                    <input type="hidden" name="foto_id" value="<?= $foto['fotos_id'] ?>">
-                    <textarea name="comentario" class="form-control mb-2" rows="3" required></textarea>
-                    <button class="btn btn-dark btn-sm">Comentar</button>
-                </form>
+                <?php if ($_SESSION['usuario_id'] == $foto['usuarios_id']): ?>
+                    <small class="text-muted">Tu foto</small>
+                <?php elseif (usuarioHaVotado($_SESSION['usuario_id'], $foto['fotos_id'])): ?>
+                    <small class="text-muted">Ya votada</small>
+                <?php else: ?>
+                    <form action="votar.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="foto_id" value="<?= $foto['fotos_id'] ?>">
+                        <button class="ui tiny button">Votar</button>
+                    </form>
+                <?php endif; ?>
+            <?php else: ?>
+                <small class="text-muted">Inicia sesión para votar</small>
             <?php endif; ?>
-
-            <!-- CONTENEDOR AJAX -->
-            <div id="comentarios">
-                <?php include 'includes/comentarios.php'; ?>
-            </div>
-
         </div>
     </div>
 
+    <!-- Comentarios -->
+    <div class="ui segment">
+        <h4 class="ui dividing header">Comentarios</h4>
+
+        <?php if (usuarioLogueado()): ?>
+            <form class="ui reply form" action="procesar_comentario.php" method="POST">
+                <input type="hidden" name="foto_id" value="<?= $foto['fotos_id'] ?>">
+                <div class="field">
+                    <textarea name="comentario" rows="2" placeholder="Escribe un comentario..." required></textarea>
+                </div>
+                <button class="ui primary button tiny">Comentar</button>
+            </form>
+        <?php else: ?>
+            <p class="text-muted">Inicia sesión para comentar.</p>
+        <?php endif; ?>
+
+        <div class="ui comments" style="max-width: 100%;">
+            <?php foreach (obtenerComentarios($foto['fotos_id']) as $c): ?>
+                <div class="comment">
+                    <div class="content">
+                        <a class="author"><?= htmlspecialchars($c['nombre']) ?></a>
+                        <div class="metadata">
+                            <span class="date">
+                                <?php 
+                                $fechaC = new DateTime($c['fecha']);
+                                echo $fechaC->format('d/m/Y'); 
+                                ?>
+                            </span>
+                        </div>
+                        <div class="text">
+                            <?= htmlspecialchars($c['comentario']) ?>
+                        </div>
+                        <?php if (usuarioLogueado()): ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 </div>
 
 <?php include 'includes/footer.php'; ?>

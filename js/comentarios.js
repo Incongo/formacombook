@@ -17,13 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             if (!data.success) return alert(data.message);
 
-            // Insertar comentario arriba
+            // Insertar comentario arriba con estilo Semantic UI
             const contenedor = document.getElementById('comentarios');
             contenedor.insertAdjacentHTML('afterbegin', `
-                <div class="comentario mb-3">
-                    <strong>${data.comentario.autor}</strong>
-                    <p>${data.comentario.texto}</p>
-                    <small class="text-muted">${data.comentario.fecha}</small>
+                <div class="comment">
+                    <div class="content">
+                        <a class="author">${data.comentario.autor}</a>
+                        <div class="metadata">
+                            <span class="date">${data.comentario.fecha}</span>
+                        </div>
+                        <div class="text">
+                            ${data.comentario.texto}
+                        </div>
+                    </div>
                 </div>
             `);
 
@@ -47,11 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             if (!data.success) return alert(data.message);
 
-            const respuestas = form.closest('.comentario').querySelector('.respuestas');
+            const respuestas = form.closest('.comment').querySelector('.comments');
             respuestas.insertAdjacentHTML('beforeend', `
-                <div class="respuesta mb-2">
-                    <strong>${data.respuesta.autor}</strong>
-                    <p>${data.respuesta.texto}</p>
+                <div class="comment">
+                    <div class="content">
+                        <a class="author">${data.respuesta.autor}</a>
+                        <div class="text">${data.respuesta.texto}</div>
+                    </div>
                 </div>
             `);
 

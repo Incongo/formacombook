@@ -25,11 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Si no hay errores, intentamos loguear
     if (empty($errores)) {
-
         $usuario = obtenerUsuarioPorEmail($email);
 
         if ($usuario && password_verify($password, $usuario['password'])) {
-
             // Crear sesión
             $_SESSION['usuario_id'] = $usuario['usuarios_id'];
             $_SESSION['usuario_nombre'] = $usuario['nombre'];
@@ -44,30 +42,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include 'includes/header.php'; ?>
 
-<div class="auth-container">
-    <div class="login-card">
-        <h1>Iniciar sesión</h1>
+<div class="ui container" style="max-width: 400px; margin-top: 60px;">
+    <div class="ui centered card">
+        <div class="content">
+            <h2 class="ui header center aligned">Iniciar sesión</h2>
 
-        <?php if (!empty($errores)): ?>
-            <div class="alert alert-danger">
-                <ul>
-                    <?php foreach ($errores as $error): ?>
-                        <li><?php echo $error; ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+            <?php if (!empty($errores)): ?>
+                <div class="ui negative message">
+                    <div class="header">Error</div>
+                    <ul class="list">
+                        <?php foreach ($errores as $error): ?>
+                            <li><?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
 
-        <form action="" method="POST">
-            <label>Email:</label>
-            <input type="email" name="email" required>
+            <form class="ui form" action="" method="POST">
+                <div class="field">
+                    <label>Email</label>
+                    <div class="ui left icon input">
+                        <input type="email" name="email" required>
+                        <i class="user icon"></i>
+                    </div>
+                </div>
 
-            <label>Contraseña:</label>
-            <input type="password" name="password" required>
+                <div class="field">
+                    <label>Contraseña</label>
+                    <div class="ui left icon input">
+                        <input type="password" name="password" required>
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
 
-            <button type="submit">Entrar</button>
-        </form>
+                <button type="submit" class="ui primary button fluid">Entrar</button>
+            </form>
+        </div>
     </div>
 </div>
+
 
 <?php include 'includes/footer.php'; ?>

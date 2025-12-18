@@ -1,23 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 /* --------------------------------------------------
-   VARIABLES (USAMOS TUS COLORES ORIGINALES)
+   VARIABLES (PALETA DE COLORES)
 -------------------------------------------------- */
 :root {
     --color-fondo: #f4f4f4;
     --color-texto: #222;
-    --color-header: #333;
-    --color-footer: #222;
-    --color-card-bg: rgba(255, 255, 255, 0.85);
+    --color-header: #1a1a1a;
+    --color-footer: #1a1a1a;
+    --color-card-bg: #fff;
     --color-card-border: #ddd;
     --color-card-text: #555;
-    --color-boton: #333;
+    --color-boton: #1a1a1a;
     --color-boton-hover: #111;
     --color-blanco: #fff;
+    --color-error: #c0392b;
+    --color-exito: #2ecc71;
+    --color-item: #1a1a1a;
 }
 
 /* --------------------------------------------------
    RESET Y BASE
 -------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 * {
     margin: 0;
@@ -25,8 +28,7 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
     height: 100%;
     font-family: "Montserrat", sans-serif;
     background-color: var(--color-fondo);
@@ -73,14 +75,29 @@ nav ul li a {
 nav ul li a:hover {
     text-decoration: underline;
 }
+.ui.inverted.menu,
+.ui.inverted.segment {
+  background-color: var(--color-header) !important;
+}
+.ui.inverted.menu .item,
+.ui.inverted.segment {
+  color: #fff !important;
+}
 
-/* Campana */
+.ui.inverted.button {
+    padding: 10px 10px 10px 10px;
+}
+
+
+
+
+
+/* Campana de notificaciones */
 .icono-notis {
     position: relative;
     font-size: 20px;
     color: var(--color-blanco);
 }
-
 .icono-notis .contador {
     position: absolute;
     top: -6px;
@@ -94,53 +111,46 @@ nav ul li a:hover {
 }
 
 /* --------------------------------------------------
-   TARJETAS (FOTOS, COMENTARIOS, FORMULARIOS)
+   TARJETAS (GENÉRICAS)
 -------------------------------------------------- */
 .card {
     background-color: var(--color-card-bg);
     border: 1px solid var(--color-card-border);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 5px 7px rgba(0, 0, 0, 0.08);
-    padding: 15px;
     transition: transform 0.2s ease;
 }
-
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+}
+.card img {
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.card:hover img {
+    transform: scale(1.03);
 }
 
 /* --------------------------------------------------
    GALERÍA DE FOTOS
 -------------------------------------------------- */
-
-/* PC → máximo 4 fotos */
 .galeria {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* más flexible */
     gap: 20px;
     padding: 20px 40px;
 }
-
-.foto {
-    background: var(--color-card-bg);
-    border: 1px solid var(--color-card-border);
-    border-radius: 6px;
-    padding: 10px;
-    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.08);
-}
-
 .foto img {
-    width: 100%;
     border-radius: 6px;
 }
 
 /* --------------------------------------------------
-   FORMULARIOS EN TARJETAS
+   FORMULARIOS
 -------------------------------------------------- */
 .form-card {
     max-width: 500px;
-    width: 100%;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid var(--color-card-border);
@@ -148,13 +158,11 @@ nav ul li a:hover {
     background: var(--color-blanco);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 .form-card label {
     display: block;
     margin-top: 10px;
     font-weight: 600;
 }
-
 .form-card input,
 .form-card textarea {
     width: 100%;
@@ -164,7 +172,6 @@ nav ul li a:hover {
     border-radius: 4px;
     font-family: inherit;
 }
-
 .form-card button {
     width: 100%;
     margin-top: 15px;
@@ -176,15 +183,13 @@ nav ul li a:hover {
     border-radius: 4px;
     cursor: pointer;
 }
-
 .form-card button:hover {
     background: var(--color-boton-hover);
 }
 
 /* --------------------------------------------------
-   LOGIN Y REGISTRO (TARJETAS CENTRADAS)
+   LOGIN Y REGISTRO
 -------------------------------------------------- */
-
 .auth-container {
     display: flex;
     justify-content: center;
@@ -192,9 +197,7 @@ nav ul li a:hover {
     min-height: 70vh;
     padding: 20px;
 }
-
-.login-card,
-.register-card {
+.login-card, .register-card {
     max-width: 500px;
     width: 100%;
     padding: 20px;
@@ -203,69 +206,58 @@ nav ul li a:hover {
     background: var(--color-blanco);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-.login-card h1,
-.register-card h1 {
+.login-card h1, .register-card h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.login-card form label,
-.register-card form label {
-    margin-top: 10px;
-    display: block;
-    font-weight: 600;
+.ui.primary.button.fluid{
+    background-color:  #1a1a1a;
 }
-
-.login-card form input,
-.register-card form input,
-.register-card form textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #bbb;
-    border-radius: 4px;
-    font-family: inherit;
-}
-
-.register-card form textarea {
-    min-height: 120px;
-    resize: vertical;
-}
-
-.login-card form button,
-.register-card form button {
-    width: 100%;
-    margin-top: 15px;
-    background: var(--color-boton);
-    color: var(--color-blanco);
-    border: none;
-    padding: 10px;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.login-card form button:hover,
-.register-card form button:hover {
-    background: var(--color-boton-hover);
-}
-
 
 /* --------------------------------------------------
-   COMENTARIOS
+   COMENTARIOS (Semantic UI compactado)
 -------------------------------------------------- */
-.comentario {
-    background: var(--color-card-bg);
-    border: 1px solid var(--color-card-border);
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 10px;
+.ui.comments .comment {
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
+}
+.ui.comments .comment .text {
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+.ui.comments .comments { 
+    margin-top: 0.3em;
+    margin-left: 1.2em;
+}
+.ui.comments .comment .metadata {
+    font-size: 0.75em;
+    color: rgba(0,0,0,0.4);
+}
+.ui.reply.form textarea {
+    min-height: 2em;
 }
 
-.respuesta {
-    margin-left: 20px;
-    background: rgba(255, 255, 255, 0.5);
+/* Formularios de comentario compactos */
+.ui.action.input {
+  display: flex;          /* fuerza flexbox */
+  align-items: center;    /* alinea verticalmente */
+  width: 100%;            /* ocupa todo el ancho */
+}
+
+.ui.action.input input {
+  flex: 1;                /* el campo ocupa todo el espacio disponible */
+}
+
+.ui.action.input .ui.button {
+  flex-shrink: 0;         /* el botón mantiene su tamaño */
+  background: var(--color-boton);
+  color: var(--color-blanco);
+  border-radius: 0 4px 4px 0; /* esquinas redondeadas solo a la derecha */
+}
+
+.ui.action.input .ui.button:hover {
+  background: var(--color-boton-hover);
 }
 
 /* --------------------------------------------------
@@ -280,71 +272,7 @@ footer {
 }
 
 /* --------------------------------------------------
-   RESPONSIVE
--------------------------------------------------- */
-
-/* Tablet → 2 fotos */
-@media (max-width: 900px) {
-    .galeria {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 20px;
-    }
-}
-
-/* Móvil → 1 foto + menú centrado */
-@media (max-width: 600px) {
-
-    header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 10px;
-    }
-
-    nav ul {
-        justify-content: center;
-    }
-
-    .galeria {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .form-card {
-        margin: 10px;
-    }
-}
-
-.card-img-top {
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-}
-
-.card {
-    border: none;
-    border-radius: 8px;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    transition: all 0.2s ease;
-}
-
-.badge {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-}
-
-.card-img-top {
-    transition: transform 0.3s ease;
-}
-
-.card:hover .card-img-top {
-    transform: scale(1.03);
-}
-
-/* --------------------------------------------------
-   ALERTAS (ÉXITO Y ERROR)
+   ALERTAS
 -------------------------------------------------- */
 .alert {
     padding: 12px 15px;
@@ -353,19 +281,20 @@ footer {
     font-weight: 500;
     font-size: 0.95rem;
 }
-
 .alert-danger {
     background: #ffe0e0;
     color: #a33;
     border: 1px solid #f5b5b5;
 }
-
 .alert-success {
     background: #e0ffe5;
     color: #2a7;
     border: 1px solid #9fdba8;
 }
 
+/* --------------------------------------------------
+   BOTONES
+-------------------------------------------------- */
 .btn {
     background: var(--color-boton);
     color: var(--color-blanco);
@@ -376,38 +305,97 @@ footer {
     font-weight: 600;
     transition: background 0.2s ease;
 }
-
+.btn:hover {
+    background: var(--color-boton-hover);
+}
 .btn-eliminar {
-    background: var(--color-boton);
+    background: var(--color-error);
     color: var(--color-blanco);
-    border: none;
-    padding: 8px 3px;
+    padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
     transition: background 0.2s ease;
-    background: #c0392b;
-    margin-top: 3px;
 }
 
-@media (min-width: 992px) {
-    .card {
-        max-width: 600px;   /* tarjetas un poco más anchas */
-        margin: 0 auto;
-    }
+/* Botón dentro de comentarios */
+.ui.reply.form button,
+.ui.action.input .ui.button {
+  background: var(--color-boton);
+  color: var(--color-blanco);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
 
+.ui.reply.form button:hover,
+.ui.action.input .ui.button:hover {
+  background: var(--color-boton-hover);
+}
+
+
+
+/* --------------------------------------------------
+   RESPONSIVE
+-------------------------------------------------- */
+@media (max-width: 900px) {
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+    }
+}
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+    nav ul {
+        justify-content: center;
+    }
+    .galeria {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }   
     .form-card {
-        max-width: 600px;   /* formularios más estrechos */
-        margin: 0 auto;
+        margin: 10px;
     }
-}
-/* FOTO DETALLE */
-.card img {
-    background-color: #000;
 }
 
-@media (min-width: 992px) {
-    .card img {
-        max-height: 80vh;
-        object-fit: contain;
-    }
+/* Header responsive */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Los dos bloques dentro del header en la misma línea */
+header > .ui.inverted.segment {
+  margin: 0;            /* quita márgenes extra */
+  flex: 1;              /* que ocupen espacio proporcional */
+}
+
+/* El bloque del logo+nombre a la izquierda */
+header > .ui.inverted.segment:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* El bloque del menú a la derecha */
+header > .ui.inverted.segment:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* En pantallas pequeñas forzar que sigan en la misma línea */
+@media (max-width: 768px) {
+  header {
+    flex-direction: row;   /* no se apilen */
+  }
+}

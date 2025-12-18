@@ -306,35 +306,46 @@ function obtenerComentario($comentario_id)
     return $stmt->get_result()->fetch_assoc();
 }
 
+function contarComentarios($foto_id) {
+    $db = conectarBD();
+    $sql = "SELECT COUNT(*) AS total FROM comentarios WHERE fotos_id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $foto_id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila = $resultado->fetch_assoc();
+    return $fila['total'];
+}
+
 // Obtener respuestas de un comentario
-function obtenerRespuestas($comentario_id)
-{
-    $db = conectarBD();
-    $sql = "SELECT c.*, u.nombre
-            FROM comentarios c
-            INNER JOIN usuarios u ON c.usuarios_id = u.usuarios_id
-            WHERE c.comentario_padre_id = ?
-            ORDER BY c.fecha ASC";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param("i", $comentario_id);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-}
-
+//function obtenerRespuestas($comentario_id)
+//{
+ //   $db = conectarBD();
+ //   $sql = "SELECT c.*, u.nombre
+//            FROM comentarios c
+//            INNER JOIN usuarios u ON c.usuarios_id = u.usuarios_id
+//            WHERE c.comentario_padre_id = ?
+//            ORDER BY c.fecha ASC";
+//    $stmt = $db->prepare($sql);
+//    $stmt->bind_param("i", $comentario_id);
+//    $stmt->execute();
+//    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+//}
 // Guardar respuesta a un comentario
-function guardarRespuesta($usuario_id, $foto_id, $comentario_padre_id, $texto)
-{
-    $db = conectarBD();
-    $sql = "INSERT INTO comentarios (usuarios_id, fotos_id, comentario, comentario_padre_id, fecha)
-            VALUES (?, ?, ?, ?, NOW())";
-    $stmt = $db->prepare($sql);
-    $stmt->bind_param("iisi", $usuario_id, $foto_id, $texto, $comentario_padre_id);
-    $stmt->execute();
-
-    return $db->insert_id; // ← AQUÍ ESTÁ LA CLAVE
-}
-
+//function guardarRespuesta($usuario_id, $foto_id, $comentario_padre_id, $texto)
+//{
+//    $db = conectarBD();
+//    $sql = "INSERT INTO comentarios (usuarios_id, fotos_id, comentario, comentario_padre_id, fecha)
+//            VALUES (?, ?, ?, ?, NOW())";
+//    $stmt = $db->prepare($sql);
+//    $stmt->bind_param("iisi", $usuario_id, $foto_id, $texto, $comentario_padre_id);
+//    $stmt->execute();
+//
+ //   return $db->insert_id; // ← AQUÍ ESTÁ LA CLAVE
+//}
+// -----------------------------
 // Contar notificaciones no leídas
+
 function contarNotificacionesNoLeidas($usuario_id)
 {
     $db = conectarBD();

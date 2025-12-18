@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(form.action, {
                     method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
                     body: formData
                 });
 
@@ -24,16 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // Actualizar contador
+                // Actualizar contador con Semantic UI label
                 const contador = document.querySelector(
                     `.votos-contador[data-id="${fotoId}"]`
                 );
                 if (contador) {
-                    contador.innerHTML = `❤️ ${data.votos}`;
+                    contador.innerHTML = `<div class="ui label">❤️ ${data.votos}</div>`;
                 }
 
-                // Cambiar botón
-                form.innerHTML = `<small class="text-muted">Votado</small>`;
+                // Cambiar botón por texto estilizado
+                form.innerHTML = `<div class="ui tiny label">Votado</div>`;
 
             } catch (error) {
                 console.error(error);

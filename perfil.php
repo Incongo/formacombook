@@ -25,72 +25,83 @@ $fotos = $stmt->get_result();
 include 'includes/header.php';
 ?>
 
-<div class="container my-4">
-    <h2 class="text-center mb-4">Mi Perfil</h2>
+<div class="ui container" style="margin-top: 40px;">
+    <h2 class="ui header center aligned">Mi Perfil</h2>
 
-    <div class="perfil d-flex flex-column flex-lg-row gap-4">
-
+    <div class="ui stackable grid">
         <!-- Info del usuario -->
-        <div class="perfil-info card flex-shrink-0 p-3 text-center" style="max-width: 350px;">
-            <img class="avatar mb-3" src="<?php echo BASE_URL . $usuario['avatar']; ?>" alt="Avatar">
-
-            <h3 class="mb-2"><?php echo $usuario['nombre']; ?></h3>
-
-            <p><strong>Email:</strong><br><?php echo $usuario['email']; ?></p>
-
-            <p><strong>Biografía:</strong><br>
-                <?php echo !empty($usuario['bio']) ? $usuario['bio'] : "Sin biografía"; ?>
-            </p>
-
-            <p><strong>Miembro desde:</strong><br><?php echo $usuario['fecha_registro']; ?></p>
-
-            <a class="btn w-100 mt-3" href="editar_perfil.php">Editar perfil</a>
+        <div class="four wide column">
+            <div class="ui card centered">
+                <div class="image">
+                    <img src="<?php echo BASE_URL . $usuario['avatar']; ?>" alt="Avatar">
+                </div>
+                <div class="content">
+                    <h3 class="header"><?php echo $usuario['nombre']; ?></h3>
+                    <div class="meta">
+                        <span>Email</span>
+                    </div>
+                    <div class="description">
+                        <?php echo $usuario['email']; ?>
+                    </div>
+                    <div class="meta" style="margin-top:10px;">
+                        <span>Biografía</span>
+                    </div>
+                    <div class="description">
+                        <?php echo !empty($usuario['bio']) ? $usuario['bio'] : "Sin biografía"; ?>
+                    </div>
+                    <div class="meta" style="margin-top:10px;">
+                        <span>Miembro desde</span>
+                    </div>
+                    <div class="description">
+                        <?php echo $usuario['fecha_registro']; ?>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <a href="editar_perfil.php" class="ui fluid primary button">Editar perfil</a>
+                </div>
+            </div>
         </div>
 
         <!-- Fotos y notificaciones -->
-        <div class="perfil-fotos flex-grow-1">
-
+        <div class="twelve wide column">
             <!-- Notificaciones -->
-            <div class="card mb-4 p-3">
-                <h3 class="mb-3">Notificaciones</h3>
-                <div class="notificaciones">
+            <div class="ui raised segment">
+                <h3 class="ui header">Notificaciones</h3>
+                <div class="ui relaxed divided list">
                     <?php
                     $notificaciones = obtenerNotificaciones($_SESSION['usuario_id']);
 
                     if (empty($notificaciones)) {
-                        echo "<p class='text-muted'>No tienes notificaciones.</p>";
+                        echo "<div class='item'><div class='content'><div class='description text-muted'>No tienes notificaciones.</div></div></div>";
                     } else {
                         foreach ($notificaciones as $n) {
-                            echo "<div class='notificacion " . ($n['leido'] ? "leido" : "noleido") . "'>";
-
+                            echo "<div class='item'>";
+                            echo "<i class='bell icon'></i>";
+                            echo "<div class='content'>";
                             switch ($n['tipo']) {
                                 case 'like_foto':
-                                    echo "<a href='foto.php?id={$n['foto_id']}'>
+                                    echo "<a class='header' href='foto.php?id={$n['foto_id']}'>
                                         {$n['origen']} le dio like a tu foto
                                     </a>";
                                     break;
-
                                 case 'like_comentario':
-                                    echo "<a href='foto.php?id={$n['foto_id']}#comentario{$n['comentario_id']}'>
+                                    echo "<a class='header' href='foto.php?id={$n['foto_id']}#comentario{$n['comentario_id']}'>
                                         {$n['origen']} le dio like a tu comentario
                                     </a>";
                                     break;
-
                                 case 'comentario':
-                                    echo "<a href='foto.php?id={$n['foto_id']}#comentario{$n['comentario_id']}'>
+                                    echo "<a class='header' href='foto.php?id={$n['foto_id']}#comentario{$n['comentario_id']}'>
                                         {$n['origen']} comentó tu foto
                                     </a>";
                                     break;
-
                                 case 'respuesta':
-                                    echo "<a href='foto.php?id={$n['foto_id']}#comentario{$n['comentario_id']}'>
+                                    echo "<a class='header' href='foto.php?id={$n['foto_id']}#comentario{$n['comentario_id']}'>
                                         {$n['origen']} respondió a tu comentario
                                     </a>";
                                     break;
                             }
-
-                            echo "<span class='fecha d-block text-muted small'>{$n['fecha']}</span>";
-                            echo "</div>";
+                            echo "<div class='description'><span class='date'>{$n['fecha']}</span></div>";
+                            echo "</div></div>";
                         }
                     }
                     ?>
@@ -98,42 +109,44 @@ include 'includes/header.php';
             </div>
 
             <!-- Fotos -->
-            <div class="card p-3">
-                <h3 class="mb-3">Mis fotos</h3>
+            <div class="ui raised segment">
+                <h3 class="ui header">Mis fotos</h3>
 
                 <?php if ($fotos->num_rows === 0): ?>
                     <p class="text-muted">No has subido ninguna foto todavía.</p>
                 <?php else: ?>
-                    <div class="galeria">
+                    <div class="ui three stackable cards">
                         <?php while ($foto = $fotos->fetch_assoc()): ?>
-                            <div class="foto">
-                                <img src="<?php echo BASE_URL . $foto['ruta']; ?>" alt="<?php echo $foto['titulo']; ?>">
-
-                                <h4 class="mt-2"><?php echo $foto['titulo']; ?></h4>
-
-                                <p><?php echo $foto['descripcion']; ?></p>
-
-                                <p><strong>Votos:</strong> <?php echo contarVotos($foto['fotos_id']); ?></p>
-
-                                <p class="fecha text-muted small">Subida el: <?php echo $foto['fecha_subida']; ?></p>
-
-                                <form action="editar_foto.php" method="GET" class="mt-2">
-                                    <input type="hidden" name="foto_id" value="<?php echo $foto['fotos_id']; ?>">
-                                    <button type="submit" class="btn">Editar</button>
-                                </form>
-
-
-                                <form action="eliminar_foto.php" method="POST" 
-                                      onsubmit="return confirm('¿Seguro que quieres eliminar esta foto?');">
-                                    <input type="hidden" name="foto_id" value="<?php echo $foto['fotos_id']; ?>">
-                                    <button type="submit" class="btn-eliminar">Eliminar</button>
-                                </form>
+                            <div class="card">
+                                <div class="image">
+                                    <img src="<?php echo BASE_URL . $foto['ruta']; ?>" alt="<?php echo $foto['titulo']; ?>">
+                                </div>
+                                <div class="content">
+                                    <h4 class="header"><?php echo $foto['titulo']; ?></h4>
+                                    <div class="description"><?php echo $foto['descripcion']; ?></div>
+                                    <div class="meta" style="margin-top:10px;">
+                                        <span><strong>Votos:</strong> <?php echo contarVotos($foto['fotos_id']); ?></span>
+                                    </div>
+                                    <div class="meta">
+                                        <span class="date">Subida el: <?php echo $foto['fecha_subida']; ?></span>
+                                    </div>
+                                </div>
+                                <div class="extra content">
+                                    <form action="editar_foto.php" method="GET" style="margin-bottom:5px;">
+                                        <input type="hidden" name="foto_id" value="<?php echo $foto['fotos_id']; ?>">
+                                        <button type="submit" class="ui button">Editar</button>
+                                    </form>
+                                    <form action="eliminar_foto.php" method="POST" 
+                                          onsubmit="return confirm('¿Seguro que quieres eliminar esta foto?');">
+                                        <input type="hidden" name="foto_id" value="<?php echo $foto['fotos_id']; ?>">
+                                        <button type="submit" class="ui red button">Eliminar</button>
+                                    </form>
+                                </div>
                             </div>
                         <?php endwhile; ?>
                     </div>
                 <?php endif; ?>
             </div>
-
         </div>
     </div>
 </div>
