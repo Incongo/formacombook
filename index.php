@@ -52,9 +52,10 @@ include 'includes/header.php';
 
                         <div class="d-flex justify-content-between align-items-center mt-2">
 
-                            <span class="badge bg-dark">
+                            <span class="badge bg-dark votos-contador" data-id="<?= $foto['fotos_id'] ?>">
                                 ❤️ <?= contarVotos($foto['fotos_id']) ?>
                             </span>
+
 
                             <?php if (usuarioLogueado()): ?>
 
@@ -65,7 +66,7 @@ include 'includes/header.php';
                                     <small class="text-muted">Votada</small>
 
                                 <?php else: ?>
-                                    <form action="votar.php" method="POST">
+                                    <form action="votar.php" method="POST" class="form-voto">
                                         <input type="hidden" name="foto_id" value="<?= $foto['fotos_id'] ?>">
                                         <button class="btn btn-sm btn-outline-dark">
                                             Votar

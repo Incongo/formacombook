@@ -401,5 +401,15 @@ footer {
         margin: 0 auto;
     }
 }
+/* FOTO DETALLE */
+.card img {
+    background-color: #000;
+}
 
+@media (min-width: 992px) {
+    .card img {
+        max-height: 80vh;
+        object-fit: contain;
+    }
+}
 
