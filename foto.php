@@ -12,15 +12,15 @@ if (!$foto) {
 include 'includes/header.php';
 ?>
 
-        <!-- INFO -->
+<!-- INFO -->
 <div class="ui container" style="margin-top: 30px; max-width: 900px;">
     <div class="ui card fluid">
         <!-- Imagen protagonista -->
         <div class="image">
             <img class="ui fluid image"
-                 src="<?= BASE_URL . $foto['ruta'] ?>"
-                 alt="<?= htmlspecialchars($foto['titulo']) ?>"
-                 loading="lazy">
+                src="<?= BASE_URL . $foto['ruta'] ?>"
+                alt="<?= htmlspecialchars($foto['titulo']) ?>"
+                loading="lazy">
         </div>
 
         <!-- Datos de la foto -->
@@ -29,17 +29,14 @@ include 'includes/header.php';
             <div class="meta">
                 <?php if (!empty($foto['avatar'])): ?>
                     <img class="ui avatar image"
-                         src="<?= BASE_URL . $foto['avatar']; ?>"
-                         alt="Avatar de <?= htmlspecialchars($foto['autor']); ?>">
+                        src="<?= BASE_URL . $foto['avatar']; ?>"
+                        alt="Avatar de <?= htmlspecialchars($foto['autor']); ?>">
                 <?php endif; ?>
-                por <strong><?= htmlspecialchars($foto['autor']) ?></strong> · 
-                <?php 
+                por <strong><?= htmlspecialchars($foto['autor']) ?></strong> ·
+                <?php
                 $fecha = new DateTime($foto['fecha_subida']);
-                echo $fecha->format('d/m/Y'); 
+                echo $fecha->format('d/m/Y');
                 ?>
-            </div>
-            <div class="description">
-                <?= nl2br(htmlspecialchars($foto['descripcion'])) ?>
             </div>
         </div>
 
@@ -89,9 +86,9 @@ include 'includes/header.php';
                         <a class="author"><?= htmlspecialchars($c['nombre']) ?></a>
                         <div class="metadata">
                             <span class="date">
-                                <?php 
+                                <?php
                                 $fechaC = new DateTime($c['fecha']);
-                                echo $fechaC->format('d/m/Y'); 
+                                echo $fechaC->format('d/m/Y');
                                 ?>
                             </span>
                         </div>

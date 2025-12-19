@@ -30,17 +30,17 @@ include 'includes/header.php';
                     <!-- Cabecera con autor y fecha -->
                     <div class="content">
                         <div class="right floated meta">
-                            <?php 
+                            <?php
                             // Mostrar solo la fecha sin hora
                             $fecha = new DateTime($foto['fecha_subida']);
-                            echo $fecha->format('d/m/Y'); 
+                            echo $fecha->format('d/m/Y');
                             ?>
                         </div>
                         <div class="header">
                             <?php if (!empty($foto['avatar'])): ?>
-                                <img class="ui avatar image" 
-                                     src="<?php echo BASE_URL . $foto['avatar']; ?>" 
-                                     alt="Avatar de <?php echo htmlspecialchars($foto['autor']); ?>">
+                                <img class="ui avatar image"
+                                    src="<?php echo BASE_URL . $foto['avatar']; ?>"
+                                    alt="Avatar de <?php echo htmlspecialchars($foto['autor']); ?>">
                             <?php endif; ?>
                             <?php echo htmlspecialchars($foto['autor']); ?>
                         </div>
@@ -51,22 +51,12 @@ include 'includes/header.php';
                         <img
                             src="<?php echo BASE_URL . $foto['ruta']; ?>"
                             alt="<?php echo htmlspecialchars($foto['titulo']); ?>"
-                            loading="lazy"
-                        >
+                            loading="lazy">
                     </a>
 
                     <!-- Título y descripción corta -->
                     <div class="content">
-                        <div class="header"><?php echo htmlspecialchars($foto['titulo']); ?></div>
-                        <?php if (!empty($foto['descripcion'])): ?>
-                            <div class="description">
-                                <?php
-                                // Recorta descripción para la card
-                                $desc = strip_tags($foto['descripcion']);
-                                echo htmlspecialchars(mb_strimwidth($desc, 0, 140, '…'));
-                                ?>
-                            </div>
-                        <?php endif; ?>
+                        <div class="header"> <?php echo htmlspecialchars($foto['titulo']); ?> </div>
                     </div>
 
                     <!-- Likes y comentarios -->
