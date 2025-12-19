@@ -3,16 +3,16 @@
    VARIABLES (PALETA DE COLORES)
 -------------------------------------------------- */
 :root {
-    --color-fondo: #f4f4f4;
-    --color-texto: #222;
+    --color-fondo: #1a1a1a;
+    --color-texto: #000000;
     --color-header: #1a1a1a;
     --color-footer: #1a1a1a;
-    --color-card-bg: #fff;
-    --color-card-border: #ddd;
+    --color-card-bg: #353535;
+    --color-card-border: #353535;
     --color-card-text: #555;
     --color-boton: #1a1a1a;
     --color-boton-hover: #111;
-    --color-blanco: #fff;
+    --color-blanco: #353535;
     --color-error: #c0392b;
     --color-exito: #2ecc71;
     --color-item: #1a1a1a;
@@ -258,6 +258,12 @@ nav ul li a:hover {
 
 .ui.action.input .ui.button:hover {
   background: var(--color-boton-hover);
+}
+
+.ui.card{
+   
+    border-color: #1a1a1a !important;
+    box-shadow: #1a1a1a !important;
 }
 
 /* --------------------------------------------------

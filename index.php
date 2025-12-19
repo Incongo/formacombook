@@ -16,7 +16,7 @@ include 'includes/header.php';
 ?>
 
 <div class="ui container" style="margin-top: 30px;">
-    <h2 class="ui header center aligned">Galería de Fotos</h2>
+
 
     <?php if (!$resultado || $resultado->num_rows === 0): ?>
         <div class="ui info message">
